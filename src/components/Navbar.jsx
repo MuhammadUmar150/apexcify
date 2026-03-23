@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [active, setActive] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // 👈 NEW
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -16,13 +18,14 @@ const Navbar = () => {
     { id: "contact", label: "Contact" },
   ];
 
-  // 🔥 SMART NAVIGATION FUNCTION
   const handleNavClick = (id) => {
+    setMenuOpen(false); // 👈 close menu on click
+
     if (location.pathname !== "/") {
       navigate("/");
       setTimeout(() => {
         document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-      }, 100); // wait for page render
+      }, 100);
     } else {
       document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     }
@@ -73,12 +76,13 @@ const Navbar = () => {
       ${scrolled ? "bg-black/80 backdrop-blur-xl border-b border-white/10" : "bg-transparent"}`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo → always go home */}
+
+        {/* Logo */}
         <Link to="/" className="text-xl font-semibold tracking-wide text-white">
           Apexcify<span className="text-green-400">.</span>
         </Link>
 
-        {/* Links */}
+        {/* Desktop Links */}
         <ul className="hidden md:flex gap-8 text-sm font-medium">
           {links.map((link) => (
             <li key={link.id}>
@@ -105,7 +109,50 @@ const Navbar = () => {
         >
           Get Started
         </Link>
+
+        {/* 🍔 Hamburger */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden text-white text-2xl cursor-pointer"
+        >
+          {menuOpen ? "✕" : "☰"}
+        </button>
       </div>
+
+      {/* 📱 Mobile Menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.25 }}
+            className="md:hidden bg-black/95 backdrop-blur-lg border-t border-white/10 px-6 py-6"
+          >
+            <ul className="flex flex-col gap-6 text-center">
+              {links.map((link) => (
+                <li key={link.id}>
+                  <button
+                    onClick={() => handleNavClick(link.id)}
+                    className={`text-lg cursor-pointer
+                      ${active === link.id ? "text-green-400" : "text-gray-300"}`}
+                  >
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+
+            <Link
+              to="/auth"
+              onClick={() => setMenuOpen(false)}
+              className="block mt-6 text-center py-3 bg-green-500 text-black rounded-lg font-medium"
+            >
+              Get Started
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
