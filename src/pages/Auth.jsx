@@ -5,7 +5,7 @@ const Auth = () => {
   return (
     <section className="min-h-screen bg-black text-white flex items-center justify-center px-6 relative overflow-hidden">
 
-      {/* Background Glow (like Hero) */}
+      {/* Background Glow */}
       <motion.div
         animate={{ y: [0, -30, 0] }}
         transition={{ repeat: Infinity, duration: 6 }}

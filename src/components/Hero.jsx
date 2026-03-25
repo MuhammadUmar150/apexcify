@@ -12,7 +12,7 @@ const Hero = () => {
       id="home"
       className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 bg-black text-white pt-24 overflow-hidden"
     >
-      {/* Glow Background (parallax + smoother) */}
+      {/* Glow Background */}
       <motion.div
         style={{ y: useTransform(scrollY, [0, 500], [0, 80]) }}
         className="absolute w-[320px] h-80 bg-green-500/20 blur-3xl rounded-full top-20 left-10"
@@ -72,7 +72,7 @@ const Hero = () => {
           </a>
         </motion.div>
 
-        {/* Mini trust badge (NEW ✨) */}
+        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const Navbar = () => {
   const [active, setActive] = useState("home");
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); // 👈 NEW
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Navbar = () => {
   ];
 
   const handleNavClick = (id) => {
-    setMenuOpen(false); // 👈 close menu on click
+    setMenuOpen(false); // close menu on click
 
     if (location.pathname !== "/") {
       navigate("/");
@@ -110,7 +110,6 @@ const Navbar = () => {
           Get Started
         </Link>
 
-        {/* 🍔 Hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden text-white text-2xl cursor-pointer"
@@ -119,7 +118,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* 📱 Mobile Menu */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
